@@ -1,0 +1,8 @@
+resources:
+  methods:
+    KSS_Vimeo_StandardAccess: 'method(KSS\Vimeo\Controller\StandardController->(index)Action())'
+
+acls:
+  Everybody:
+    methods:
+      KSS_Vimeo_StandardAccess: GRANT

@@ -1,0 +1,16 @@
+.vimeo-container{
+	margin: 0 -5px;
+	.item{
+		padding: 3px;
+		visibility: hidden;
+
+		a{
+			display: block;
+		}
+
+		img {
+			width: 100% !important;
+			height: auto !important;
+		}
+	}
+}

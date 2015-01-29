@@ -1,0 +1,33 @@
+/**
+ * Company: KSS services/solutions
+ * User: Alexander Kappler
+ * Date: 10.12.14
+ */
+prototype(KSS.Vimeo:Plugin) < prototype(TYPO3.Neos:Plugin)
+prototype(KSS.Vimeo:Plugin) {
+	package = 'KSS.Vimeo'
+	controller = 'Standard'
+	action = 'index'
+}
+
+page.head {
+	stylesheets {
+		isotope = '<link href="/_Resources/Static/Packages/KSS.Vimeo/Stylesheet/isotope-custom.css" rel="stylesheet">'
+		fancybox = '<link rel="stylesheet" href="/_Resources/Static/Packages/KSS.Vimeo/Fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />'
+	}
+}
+
+page.body {
+	javascripts {
+		isotope = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/bower_components/isotope/dist/isotope.pkgd.min.js"></script>'
+		isotope.@position = 'after jquery'
+		isotopeCustom = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/Javascript/vimeo-custom.js"></script>'
+		isotopeCustom.@position = 'after isotope'
+		fancybox = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/Fancybox/jquery.fancybox.pack.js"></script>'
+		fancybox.@position = 'after jquery'
+		fancyboxMediaHelper = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/Fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>'
+		fancyboxMediaHelper.@position = 'after fancybox'
+		imagesLoaded = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>'
+		imagesLoaded.@position = 'after jquery'
+	}
+}

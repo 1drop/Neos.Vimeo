@@ -1,0 +1,16 @@
+.vimeo-container {
+  margin: 0 -5px;
+}
+.vimeo-container .item {
+  padding: 3px;
+  visibility: hidden;
+}
+.vimeo-container .item a {
+  display: block;
+}
+.vimeo-container .item img {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/*# sourceMappingURL=isotope-custom.css.map */

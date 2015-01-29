@@ -1,0 +1,91 @@
+{namespace kss=KSS\Vimeo\ViewHelpers}
+<f:layout name="Default"/>
+
+<f:debug>{allElementsOfUser}</f:debug>
+<f:section name="Content">
+	<f:security.ifAuthenticated>
+		<h3>Vimeo Manager</h3>
+		<p>&nbsp;</p>
+		<f:if condition="{allElementsOfUser.status} == 200">
+			<f:then>
+				<h4>Your available {allElementsOfUser.type} on vimeo</h4>
+				<p>&nbsp;</p>
+				<div class="table-responsive">
+					<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>
+								Name
+							</th>
+							<th>
+								Direct URL
+							</th>
+							<f:if condition="{allElementsOfUser.type} == 'videos'">
+								<f:then></f:then>
+								<f:else>
+									<th>
+										Total videos
+									</th>
+								</f:else>
+							</f:if>
+							<th>
+								Privacy
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					<f:for each="{allElementsOfUser.data}" as="element" iteration="elementIteration">
+						<tr>
+							<td>
+								{elementIteration.cycle})
+							</td>
+							<td>
+								{element.name}&nbsp;
+							</td>
+							<td>
+								<a href="{element.link}" target="_blank">{element.link}</a>&nbsp;
+							</td>
+							<f:if condition="{allElementsOfUser.type} == 'videos'">
+								<f:then></f:then>
+								<f:else>
+									<td>
+										<f:count>{element.videos}</f:count>
+									</td>
+								</f:else>
+							</f:if>
+							<td>
+								{element.privacy.view}
+							</td>
+						</tr>
+					</f:for>
+					</tbody>
+				</table>
+				</div>
+			</f:then>
+			<f:else>
+				<div class="bg-danger">
+					<h4 style="font-weight: bold" class="text-danger">Error message from vimeo:</h4>
+					<p>{allElementsOfUser.message}</p>
+				</div>
+				<div class="bg-warning">
+					<h4 style="font-weight: bold" class="text-warning">Correct vimeo credentials added?</h4>
+					<p>You'll need to add your vimeo credentials in the neos inspector. To get this credentails create a vimeo app.<br> You can get it here: <a href="https://developer.vimeo.com/apps/new">https://developer.vimeo.com/apps/new</a></p>
+					<p>Make sure that you are logged in to vimeo in order to be able to create a new app and access token.</p>
+				</div>
+			</f:else>
+		</f:if>
+	</f:security.ifAuthenticated>
+
+	<f:if condition="{allElementsOfUser.status} == 200">
+		<f:then>
+			<kss:vimeo elements="{allElementsOfUser}" thumbnailSize="{thumbnailSize}" showFilter="{showFilter}" videosPerRowExtendedDesktop="{videosPerRowExtendedDesktop}" videosPerRowDesktop="{videosPerRowDesktop}" videosPerRowTablet="{videosPerRowTablet}" videosPerRowMobile="{videosPerRowMobile}" defaultStartFilter="{defaultStartFilter}" addAllFilter="{addAllFilter}">Show my videos</kss:vimeo>
+		</f:then>
+		<f:else>
+			<h4 class="bg-warning">Something went wrong</h4>
+			<p class="bg-warning">{allElementsOfUser.status}</p>
+			<p class="bg-warning">{allElementsOfUser.message}</p>
+		</f:else>
+	</f:if>
+</f:section>
+

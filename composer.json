@@ -1,0 +1,14 @@
+{
+    "name": "kss/vimeo",
+    "type": "typo3-flow-package",
+    "description": "Display videos from vimeo on your page. Add several albums/channels and use them as filter, also show videos in the order like you want",
+    "require": {
+        "typo3/flow": "*",
+	    "vimeo/vimeo-api": "@stable"
+    },
+    "autoload": {
+        "psr-0": {
+            "KSS\\Vimeo": "Classes"
+        }
+    }
+}

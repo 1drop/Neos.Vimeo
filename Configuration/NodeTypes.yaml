@@ -1,0 +1,339 @@
+##
+# Vimeo plugin for neos. Gets data from vimeo api and creates a filterable grid with preview images
+#
+'KSS.Vimeo:Plugin':
+  superTypes: ['TYPO3.Neos:Plugin']
+  ui:
+    label: 'Vimeo'
+    group: 'plugins'
+    icon: 'icon-play-circle'
+    inlineEditable: TRUE
+    inspector:
+      tabs:
+        credentials:
+          label: 'Account Settings'
+          position: 30
+          icon: 'icon-user'
+      groups:
+        'vimeo-type':
+          label: 'Type Configuration'
+        'vimeo-video':
+          label: 'Video Configuration'
+        'vimeo-video-filter':
+          label: 'Filter configuration'
+        'vimeo-video-grid':
+          label: 'Grid configruation'
+        'vimeo-account':
+          label: 'Vimeo account'
+          tab: credentials
+  properties:
+    'userId':
+      type: string
+      ui:
+        label: 'User ID'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-account'
+          position: 10
+    'clientId':
+      type: string
+      ui:
+        label: 'Client Identifier'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-account'
+          position: 20
+    'clientSecret':
+      type: string
+      ui:
+        label: 'Client Secret'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-account'
+          position: 30
+    'accessToken':
+      type: string
+      ui:
+        label: 'Access Token'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-account'
+          position: 40
+    'vimeoType':
+      type: string
+      defaultValue: 'albums'
+      ui:
+        label: 'Type'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-type'
+          position: 10
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              albums:
+                label: 'Albums'
+              channels:
+                label: 'Channels'
+              groups:
+                label: 'Groups'
+              videos:
+                label: 'Videos'
+    'sortTypeBy':
+      type: string
+      defaultValue: 'alphabetical'
+      ui:
+        label: 'Sort type by'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-type'
+          position: 20
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              alphabetical:
+                label: 'Alphabetical'
+              date:
+                label: 'Date'
+              duration:
+                label: 'Duration'
+    'sortTypeDirection':
+      type: string
+      defaultValue: 'asc'
+      ui:
+        label: 'Direction for type'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-type'
+          position: 30
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              asc:
+                label: 'Ascending'
+              desc:
+                label: 'Descending'
+    'privacyOfType':
+      type: string
+      defaultValue: 'anybody'
+      ui:
+        label: 'Show only elements with privacy'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-type'
+          position: 40
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              all:
+                label: 'All'
+              anybody:
+                label: 'Anybody'
+              password:
+                label: 'Password'
+    'sortVideosBy':
+      type: string
+      defaultValue: 'date'
+      ui:
+        label: 'Sort videos'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video'
+          position: 10
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              manual:
+                label: 'Manual'
+              date:
+                label: 'Date'
+              alphabetical:
+                label: 'Alphabetical'
+              plays:
+                label: 'Plays'
+              likes:
+                label: 'Likes'
+              comments:
+                label: 'Comments'
+              duration:
+                label: 'Duration'
+              modified_time:
+                label: 'Modified time'
+    'sortVideosDirection':
+      type: string
+      defaultValue: 'asc'
+      ui:
+        label: 'Direction for sorting videos'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video'
+          position: 20
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              asc:
+                label: 'Ascending'
+              desc:
+                label: 'Descending'
+    'thumbnailSize':
+      type: integer
+      defaultValue: 2
+      ui:
+        label: 'Thumbnail Size'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video'
+          position: 30
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              0:
+                label: '100x75px'
+              1:
+                label: '200x150px'
+              2:
+                label: '295x166px'
+              3:
+                label: '640x360px'
+              4:
+                label: '960x540px'
+              5:
+                label: '1280x719px'
+              6:
+                label: '1900x1280px'
+    'useVisualHelperLibrary':
+      type: string
+      defaultValue: 'isotope'
+      ui:
+        label: 'Use this view'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video'
+          position: 40
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              nothing:
+                label: 'Nothing'
+              isotope:
+                label: 'Isotope'
+
+    'showFilter':
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        label: 'Show filter for video'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video-filter'
+          position: 10
+    'defaultStartFilter':
+      type: string
+      ui:
+        label: 'Active filter on page load'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video-filter'
+          position: 20
+          editor: 'Content/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            allowEmpty: TRUE
+            placeholder: 'No filter selected'
+            dataSourceIdentifier: 'kss-vimeo-filteroption'
+    'addAllFilter':
+      type: boolean
+      defaultValue: TRUE
+      ui:
+        label: 'Add ALL filter button'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video-filter'
+          position: 30
+    'videosPerRowExtendedDesktop':
+      type: integer
+      defaultValue: 2
+      ui:
+        label: 'Items per row: Extended Desktop'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video-grid'
+          position: 60
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              2:
+                label: 'Six'
+              3:
+                label: 'Four'
+              4:
+                label: 'Three'
+              6:
+                label: 'Two'
+              12:
+                label: 'One'
+    'videosPerRowDesktop':
+      type: integer
+      defaultValue: 3
+      ui:
+        label: 'Items per row: Desktop'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video-grid'
+          position: 70
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              2:
+                label: 'Six'
+              3:
+                label: 'Four'
+              4:
+                label: 'Three'
+              6:
+                label: 'Two'
+              12:
+                label: 'One'
+    'videosPerRowTablet':
+      type: integer
+      defaultValue: 4
+      ui:
+        label: 'Items per row: Tablet'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video-grid'
+          position: 80
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              2:
+                label: 'Six'
+              3:
+                label: 'Four'
+              4:
+                label: 'Three'
+              6:
+                label: 'Two'
+              12:
+                label: 'One'
+    'videosPerRowMobile':
+      type: integer
+      defaultValue: 12
+      ui:
+        label: 'Items per row: Mobile'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'vimeo-video-grid'
+          position: 90
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
+          editorOptions:
+            values:
+              2:
+                label: 'Six'
+              3:
+                label: 'Four'
+              4:
+                label: 'Three'
+              6:
+                label: 'Two'
+              12:
+                label: 'One'
