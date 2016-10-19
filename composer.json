@@ -3,8 +3,11 @@
     "type": "typo3-flow-package",
     "description": "Display videos from vimeo on your page. Add several albums/channels and use them as filter, also show videos in the order like you want",
     "require": {
-        "typo3/flow": "*",
+        "typo3/neos": "~2.0",
 	    "vimeo/vimeo-api": "@stable"
+    },
+    "replace": {
+        "kss/vimeo": "*"
     },
     "autoload": {
         "psr-0": {
