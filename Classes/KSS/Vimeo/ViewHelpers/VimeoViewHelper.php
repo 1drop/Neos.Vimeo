@@ -13,6 +13,14 @@ use TYPO3\Flow\Annotations as Flow;
  */
 class VimeoViewHelper extends AbstractViewHelper {
 
+	
+	/**
+	 * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
+	 * @see AbstractViewHelper::isOutputEscapingEnabled()
+	 * @var boolean
+	 */
+	protected $escapeOutput = FALSE;
+
 	/**
 	 * Defines the size of the thumbnail. Possible values: 0 - 5 (6 for plus/pro accounts)
 	 *

@@ -1,8 +1,11 @@
-resources:
-  methods:
-    KSS_Vimeo_StandardAccess: 'method(KSS\Vimeo\Controller\StandardController->(index)Action())'
 
-acls:
-  Everybody:
-    methods:
-      KSS_Vimeo_StandardAccess: GRANT
+privilegeTargets:
+  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+    KSS_Vimeo_StandardAccess:
+      matcher: method(KSS\Vimeo\Controller\StandardController->(index)Action())
+roles:
+  'TYPO3.Flow:Everybody':
+    privileges:
+      -
+        privilegeTarget: KSS_Vimeo_StandardAccess
+        permission: GRANT

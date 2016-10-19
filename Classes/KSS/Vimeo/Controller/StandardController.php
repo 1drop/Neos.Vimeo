@@ -2,7 +2,7 @@
 namespace KSS\Vimeo\Controller;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "KSS.Vimeo".             *
+ * This script belongs to the Flow package "KSS.Vimeo".                   *
  *                                                                        *
  *                                                                        */
 

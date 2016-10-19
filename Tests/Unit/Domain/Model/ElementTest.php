@@ -2,7 +2,7 @@
 namespace KSS\Vimeo\Tests\Unit\Domain\Model;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow package "KSS.Vimeo".             *
+ * This script belongs to the Flow package "KSS.Vimeo".                   *
  *                                                                        *
  *                                                                        */
 
