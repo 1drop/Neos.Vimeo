@@ -9,3 +9,8 @@ You can use this extension for Neos in your own project. It's free to use for no
 If you want to use it on commercial projects, you might have to buy a licence for fancybox and isotope or you have to replace them. 
 
 Use this extension on your own risk! 
+
+## Installation
+
+    composer require onedrop/neos-vimeo
+
