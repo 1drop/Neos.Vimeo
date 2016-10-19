@@ -13,5 +13,8 @@
         "psr-0": {
             "KSS\\Vimeo": "Classes"
         }
+    },
+    "extra": {
+        "installer-name": "KSS.Vimeo"
     }
 }
