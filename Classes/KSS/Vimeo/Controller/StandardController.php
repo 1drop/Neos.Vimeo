@@ -46,10 +46,12 @@ class StandardController extends \TYPO3\Flow\Mvc\Controller\ActionController {
 		$videosPerRowDesktop = $this->request->getInternalArgument('__videosPerRowDesktop');
 		$videosPerRowTablet = $this->request->getInternalArgument('__videosPerRowTablet');
 		$videosPerRowMobile = $this->request->getInternalArgument('__videosPerRowMobile');
+        $node = $this->request->getInternalArgument('__node');
 
 		$allElementsOfUser = $this->vimeoGetAllOfTypeService->getAllOfType($userId,$client_id, $client_secret, $access_token, $vimeoType, $sortVideosBy, $sortVideosDirection, $sortTypeBy, $sortTypeDirection, $privacyOfType);
 
 		$this->view->assignMultiple(array(
+		    'node' => $node,
 			'allElementsOfUser' => $allElementsOfUser,
 			'thumbnailSize' => $thumbnailSize,
 			'showFilter' => $showFilter,
