@@ -83,6 +83,9 @@ OnedropVimeoGrid.prototype._handleAlbumChange = function (evt) {
 
     this.filters.albums = this._getCurrentAlbumFilters();
     this.filter();
+
+    // load all videos upon activating a filter
+    this.shuffle.add(addVideoItems('all'));
 };
 
 /**
@@ -176,6 +179,16 @@ function createVideoElementFromObject(obj) {
 
 function addVideoItems(count) {
     var itemsToAdd = [];
+
+    // exit early if all videos are loaded
+    if (currentVideoItemCount >= window.window.onedropVimeoGridData.items.length) {
+        return [];
+    }
+
+    if (count === 'all') {
+        count = window.window.onedropVimeoGridData.items.length;
+    }
+
     for (var i = 0; i < count; i++) {
         if (window.window.onedropVimeoGridData.items.length > currentVideoItemCount + i) {
             var el = createVideoElementFromObject(window.window.onedropVimeoGridData.items[currentVideoItemCount + i]);
