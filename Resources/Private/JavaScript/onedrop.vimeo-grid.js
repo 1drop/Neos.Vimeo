@@ -140,6 +140,16 @@ function sortVideoItemsByDate(array) {
     return array;
 }
 
+function closeLightBox(popup, overlay) {
+    overlay.removeEventListener('click', this);
+
+    popup.classList.remove('open');
+
+    setTimeout(function () {
+        document.body.removeChild(popup);
+    }, 333);
+}
+
 function openVideoInLightbox(url) {
     var popup = document.createElement("div");
     var overlay = document.createElement("div");
@@ -155,15 +165,22 @@ function openVideoInLightbox(url) {
     videoFrame.setAttribute("mozallowfullscreen", '');
     videoFrame.setAttribute("allowfullscreen", '');
 
+    // handle overlay closing via js and ESC key
     overlay.addEventListener('click', function () {
-        overlay.removeEventListener('click', this);
-
-        popup.classList.remove('open');
-
-        setTimeout(function () {
-            document.body.removeChild(popup);
-        }, 333);
+        closeLightBox(popup, overlay);
     });
+    document.onkeydown = function (evt) {
+        evt = evt || window.event;
+        var isEscape = false;
+        if ("key" in evt) {
+            isEscape = (evt.key == "Escape" || evt.key == "Esc");
+        } else {
+            isEscape = (evt.keyCode == 27);
+        }
+        if (isEscape) {
+            closeLightBox(popup, overlay);
+        }
+    };
 
     videoContainer.appendChild(videoFrame);
     popup.appendChild(overlay);
@@ -205,7 +222,7 @@ function createVideoElementFromObject(obj) {
 
     a.addEventListener('click', function (e) {
         e.preventDefault();
-        openVideoInLightbox('//player.vimeo.com/video/' + obj.link.substr(this.href.lastIndexOf('/') + 1));
+        openVideoInLightbox('//player.vimeo.com/video/' + obj.link.substr(this.href.lastIndexOf('/') + 1) + '?autoplay=1');
     });
 
     overlay.appendChild(title);
