@@ -140,6 +140,41 @@ function sortVideoItemsByDate(array) {
     return array;
 }
 
+function openVideoInLightbox(url) {
+    var popup = document.createElement("div");
+    var overlay = document.createElement("div");
+    var videoContainer = document.createElement("div");
+    var videoFrame = document.createElement("iframe");
+
+    popup.setAttribute("id", "vimeo-video-popup");
+    overlay.setAttribute("id", "vimeo-video-popup__overlay");
+    videoContainer.setAttribute("class", "embed-responsive embed-responsive-16by9");
+    videoFrame.setAttribute("src", url);
+    videoFrame.setAttribute("frameborder", 0);
+    videoFrame.setAttribute("webkitallowfullscreen", '');
+    videoFrame.setAttribute("mozallowfullscreen", '');
+    videoFrame.setAttribute("allowfullscreen", '');
+
+    overlay.addEventListener('click', function () {
+        overlay.removeEventListener('click', this);
+
+        popup.classList.remove('open');
+
+        setTimeout(function () {
+            document.body.removeChild(popup);
+        }, 333);
+    });
+
+    videoContainer.appendChild(videoFrame);
+    popup.appendChild(overlay);
+    popup.appendChild(videoContainer);
+    document.body.appendChild(popup);
+
+    setTimeout(function () {
+        popup.classList.add('open');
+    }, 50);
+}
+
 function createVideoElementFromObject(obj) {
     var el = document.createElement("div");
     var a = document.createElement("a");
@@ -167,6 +202,11 @@ function createVideoElementFromObject(obj) {
     overlay.setAttribute("class", "item-overlay");
     title.setAttribute("class", "title");
     title.textContent = obj.title;
+
+    a.addEventListener('click', function (e) {
+        e.preventDefault();
+        openVideoInLightbox('//player.vimeo.com/video/' + obj.link.substr(this.href.lastIndexOf('/') + 1));
+    });
 
     overlay.appendChild(title);
     a.appendChild(img);

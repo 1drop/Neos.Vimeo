@@ -1,7 +1,7 @@
 .vimeo-container {
     .item {
         padding: 0;
-        .item__inner {
+        &__inner {
             position: relative;
             display: block;
             overflow: hidden;
@@ -47,5 +47,36 @@
                 }
             }
         }
+    }
+}
+
+#vimeo-video-popup {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5vw;
+    opacity: 0;
+    transition: opacity $transition-default;
+    z-index: 1051; //bootstrap modal + 1
+    &__overlay {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba($color-black, 0.75);
+        z-index: -1;
+    }
+    &.open {
+        opacity: 1;
     }
 }
