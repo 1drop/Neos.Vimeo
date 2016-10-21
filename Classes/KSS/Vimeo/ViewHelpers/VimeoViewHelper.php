@@ -60,8 +60,6 @@ class VimeoViewHelper extends AbstractViewHelper {
             $output .= $this->addFilter( $elements['data'], $defaultStartFilter, $addAllFilter );
         }
 
-//        \TYPO3\Flow\var_dump( $elements['data'][0] );
-
         $output .= '<div class="vimeo-container row" id="vimeo-grid">';
 
         if ( $elements['type'] == 'videos' ) {
@@ -89,45 +87,65 @@ class VimeoViewHelper extends AbstractViewHelper {
                 $output .= '</div>';
             }
 
+
+            $output .= '<script>window.onedropVimeoGridData = {';
+            $output .= 'itemClasses: "item col-xs-' . $videosPerRowMobile . ' col-sm-' . $videosPerRowTablet . ' col-md-' . $videosPerRowDesktop . ' col-lg-' . $videosPerRowExtendedDesktop . '",';
+            $output .= 'items: [';
+
             // Build for each returned json object the html
+            $distinctVideos = [];
             foreach ( $elements['data'] as $element ) {
                 foreach ( $element['videos'] as $video ) {
-                    $output .= $this->createHtmlElement( $video, $element, $videosPerRowMobile, $videosPerRowTablet, $videosPerRowDesktop, $videosPerRowExtendedDesktop );
+                    if ( array_key_exists( $video['link'], $distinctVideos ) ) {
+                        $distinctVideos[ $video['link'] ]['albums'][] = $element['name'];
+                    } else {
+                        $video['albums']                  = [ $element['name'] ];
+                        $distinctVideos[ $video['link'] ] = $video;
+                    }
                 }
             }
+
+            foreach ( $distinctVideos as $video ) {
+                $output .= $this->createJsonObject( $video ) . ',';
+            }
+
+            $output .= ']}</script>';
 
         }
 
         $output .= '</div>';
+        $output .= '<div class="loadmore-wrapper text-xs-center"><button class="btn-round" id="loadmore">Load more</button></div>';
 
         return $output;
     }
 
-
     /**
-     * Build the html code for each video
+     * Build build a json object from video data
      *
      * @param string $data The video
-     * @param string $element This is needed to get the album name for filtering
-     * @param integer $videosPerRowMobile
-     * @param integer $videosPerRowTablet
-     * @param integer $videosPerRowDesktop
-     * @param integer $videosPerRowExtendedDesktop
      *
      * @return string return all videos as html elements
      */
-    public function createHtmlElement( $data, $element, $videosPerRowMobile, $videosPerRowTablet, $videosPerRowDesktop, $videosPerRowExtendedDesktop ) {
-        $html = '';
+    public function createJsonObject( $data ) {
+        $object = [
+            'albums'      => [],
+            'releaseTime' => $data['release_time'],
+            'title'       => $data['name'],
+            'link'        => $data['link'],
+            'thumbnail'   => [
+                'link'   => $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['link'],
+                'width'  => $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['width'],
+                'height' => $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['height']
+            ]
+        ];
+        foreach ( $data['albums'] as $album ) {
+            $object['albums'][] = [
+                'ID'    => $this->umlaute->convertAccentAndBlankspace( $album ),
+                'title' => $album
+            ];
+        }
 
-        // loop through every given video element and create an html item
-        $html .= '<div class="item col-xs-'.$videosPerRowMobile.' col-sm-'.$videosPerRowTablet.' col-md-'.$videosPerRowDesktop.' col-lg-'.$videosPerRowExtendedDesktop.'" data-album="' . $this->umlaute->convertAccentAndBlankspace( $element['name'] ) . '" data-release="' . $data['release_time'] . '" data-title="' . $data['name'] . ' - ' . $element['name'] . '">';
-        $html .= '<a href="' . $data['link'] . '" target="_self" class="fancybox-media embed-responsive embed-responsive-16by9">';
-        $html .= '<img class="embed-responsive-item" src="' . $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['link'] . '" width="' . $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['width'] . '" height="' . $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['height'] . '" alt="' . $data['name'] . '" />';
-        $html .= '<div class="item-overlay"><span class="title">' . $data['name'] . '</span></div>';
-        $html .= '</a>';
-        $html .= '</div>';
-
-        return $html;
+        return json_encode( $object );
     }
 
     /**

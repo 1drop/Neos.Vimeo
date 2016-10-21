@@ -1,7 +1,7 @@
 .vimeo-container {
     .item {
         padding: 0;
-        a {
+        .item__inner {
             position: relative;
             display: block;
             overflow: hidden;
@@ -10,6 +10,13 @@
                 min-width: 100%;
                 min-height: 100%;
                 height: auto;
+
+                &.hover-effect {
+                    transform: scale(1.1337);
+                    filter: blur(10px);
+                    opacity: 0;
+                    transition: opacity $transition-default;
+                }
             }
             .item-overlay {
                 position: absolute;
@@ -23,14 +30,17 @@
                 justify-content: center;
                 padding: 5%;
                 color: $color-white;
-                background-color: rgba($color-black, 0.85);
+                background-color: rgba($color-black, 0.75);
                 opacity: 0;
+                transform: scale(1.1);
                 transition: opacity $transition-default;
             }
             &:focus,
             &:hover {
                 img {
-                    transform: scale(1.05);
+                    &.hover-effect {
+                        opacity: 1;
+                    }
                 }
                 .item-overlay {
                     opacity: 1;
