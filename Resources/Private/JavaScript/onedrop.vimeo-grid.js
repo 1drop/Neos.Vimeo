@@ -10,12 +10,21 @@ function toArray(thing) {
     return Array.prototype.slice.call(thing);
 }
 
+function sortByDate(element) {
+    return element.getAttribute('data-release');
+}
+
 var Demo = function (element) {
     this.albums = toArray(document.querySelectorAll('#vimeo-filters button'));
 
     this.shuffle = new Shuffle(element, {
         easing: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)', // easeOutQuart
         itemSelector: '.item'
+    });
+
+    this.shuffle.sort({
+        reverse: true,
+        by: sortByDate
     });
 
     this.filters = {

@@ -120,7 +120,7 @@ class VimeoViewHelper extends AbstractViewHelper {
         $html = '';
 
         // loop through every given video element and create an html item
-        $html .= '<div class="item col-xs-'.$videosPerRowMobile.' col-sm-'.$videosPerRowTablet.' col-md-'.$videosPerRowDesktop.' col-lg-'.$videosPerRowExtendedDesktop.'" data-album="' . $this->umlaute->convertAccentAndBlankspace( $element['name'] ) . '" data-date-created="' . $data['release_time'] . '" data-title="' . $data['name'] . ' - ' . $element['name'] . '">';
+        $html .= '<div class="item col-xs-'.$videosPerRowMobile.' col-sm-'.$videosPerRowTablet.' col-md-'.$videosPerRowDesktop.' col-lg-'.$videosPerRowExtendedDesktop.'" data-album="' . $this->umlaute->convertAccentAndBlankspace( $element['name'] ) . '" data-release="' . $data['release_time'] . '" data-title="' . $data['name'] . ' - ' . $element['name'] . '">';
         $html .= '<a href="' . $data['link'] . '" target="_self" class="fancybox-media embed-responsive embed-responsive-16by9">';
         $html .= '<img class="embed-responsive-item" src="' . $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['link'] . '" width="' . $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['width'] . '" height="' . $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['height'] . '" alt="' . $data['name'] . '" />';
         $html .= '<div class="item-overlay"><span class="title">' . $data['name'] . '</span></div>';
