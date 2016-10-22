@@ -1,33 +1,50 @@
 /**
- * Company: KSS services/solutions
- * User: Alexander Kappler
- * Date: 10.12.14
- */
-prototype(KSS.Vimeo:Plugin) < prototype(TYPO3.Neos:Plugin)
-prototype(KSS.Vimeo:Plugin) {
-	package = 'KSS.Vimeo'
-	controller = 'Standard'
-	action = 'index'
+* Company: KSS services/solutions
+* User: Alexander Kappler
+* Date: 10.12.14
+*/
+prototype(KSS.Vimeo:Plugin) < prototype(TYPO3.Neos:Plugin) {
+    package = 'KSS.Vimeo'
+    controller = 'Standard'
+    action = 'index'
+    node = ${node}
+    @cache {
+        mode = 'cached'
+        maximumLifetime = '7200'
+        entryIdentifier {
+            editPreviewMode = ${node.context.currentRenderingMode.name}
+            userId = ${q(node).property('userId')}
+            clientId = ${q(node).property('clientId')}
+            clientSecret = ${q(node).property('clientSecret')}
+            accessToken = ${q(node).property('accessToken')}
+            vimeoType = ${q(node).property('vimeoType')}
+            sortTypeBy = ${q(node).property('sortTypeBy')}
+            sortTypeDirection = ${q(node).property('sortTypeDirection')}
+            privacyOfType = ${q(node).property('privacyOfType')}
+            sortVideosBy = ${q(node).property('sortVideosBy')}
+            sortVideosDirection = ${q(node).property('sortVideosDirection')}
+            thumbnailSize = ${q(node).property('thumbnailSize')}
+            useVisualHelperLibrary = ${q(node).property('useVisualHelperLibrary')}
+            showFilter = ${q(node).property('showFilter')}
+            defaultStartFilter = ${q(node).property('defaultStartFilter')}
+            addAllFilter = ${q(node).property('addAllFilter')}
+            videosPerRowExtendedDesktop = ${q(node).property('videosPerRowExtendedDesktop')}
+            videosPerRowDesktop = ${q(node).property('videosPerRowDesktop')}
+            videosPerRowTablet = ${q(node).property('videosPerRowTablet')}
+            videosPerRowMobile = ${q(node).property('videosPerRowMobile')}
+        }
+    }
 }
 
 page.head {
-	stylesheets {
-		isotope = '<link href="/_Resources/Static/Packages/KSS.Vimeo/Stylesheet/isotope-custom.css" rel="stylesheet">'
-		fancybox = '<link rel="stylesheet" href="/_Resources/Static/Packages/KSS.Vimeo/Fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />'
-	}
+    stylesheets {
+        vimeoGrid = '<link href="/_Resources/Static/Packages/KSS.Vimeo/Styles/main.css" rel="stylesheet">'
+    }
 }
 
 page.body {
-	javascripts {
-		isotope = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/bower_components/isotope/dist/isotope.pkgd.min.js"></script>'
-		isotope.@position = 'after jquery'
-		isotopeCustom = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/Javascript/vimeo-custom.js"></script>'
-		isotopeCustom.@position = 'after isotope'
-		fancybox = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/Fancybox/jquery.fancybox.pack.js"></script>'
-		fancybox.@position = 'after jquery'
-		fancyboxMediaHelper = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/Fancybox/helpers/jquery.fancybox-media.js?v=1.0.6"></script>'
-		fancyboxMediaHelper.@position = 'after fancybox'
-		imagesLoaded = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>'
-		imagesLoaded.@position = 'after jquery'
-	}
+    javascripts {
+        shufflejs = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/JavaScript/vendor.js"></script>'
+        vimeoGrid = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/JavaScript/main.js" async defer></script>'
+    }
 }

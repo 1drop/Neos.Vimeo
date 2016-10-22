@@ -1,0 +1,17 @@
+{
+  "name": "onedrop.vimeoGrid",
+  "description": "",
+  "main": "index.js",
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "BowerComponents",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "shufflejs": "^4.0.2"
+  }
+}

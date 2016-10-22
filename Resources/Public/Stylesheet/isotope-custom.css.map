@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,gBAAgB;EACf,MAAM,EAAE,MAAM;;AACd,sBAAK;EACJ,OAAO,EAAE,GAAG;EACZ,UAAU,EAAE,MAAM;;AAElB,wBAAC;EACA,OAAO,EAAE,KAAK;;AAGf,0BAAI;EACH,KAAK,EAAE,eAAe;EACtB,MAAM,EAAE,eAAe",
-"sources": ["../../Private/Sass/isotope-custom.scss"],
-"names": [],
-"file": "isotope-custom.css"
-}

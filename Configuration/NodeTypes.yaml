@@ -6,16 +6,16 @@
   superTypes:
     'TYPO3.Neos:Plugin': true
   ui:
-    label: Vimeo
-    group: plugins
-    icon: icon-play-circle
+    label: 'Vimeo'
+    group: 'plugins'
+    icon: 'icon-play-circle'
     inlineEditable: true
     inspector:
       tabs:
         credentials:
           label: 'Account Settings'
           position: 30
-          icon: icon-user
+          icon: 'icon-user'
       groups:
         vimeo-type:
           label: 'Type Configuration'
@@ -27,7 +27,7 @@
           label: 'Grid configruation'
         vimeo-account:
           label: 'Vimeo account'
-          tab: credentials
+          tab: 'credentials'
   properties:
     userId:
       type: string
@@ -35,7 +35,7 @@
         label: 'User ID'
         reloadIfChanged: true
         inspector:
-          group: vimeo-account
+          group: 'vimeo-account'
           position: 10
     clientId:
       type: string
@@ -43,7 +43,7 @@
         label: 'Client Identifier'
         reloadIfChanged: true
         inspector:
-          group: vimeo-account
+          group: 'vimeo-account'
           position: 20
     clientSecret:
       type: string
@@ -51,7 +51,7 @@
         label: 'Client Secret'
         reloadIfChanged: true
         inspector:
-          group: vimeo-account
+          group: 'vimeo-account'
           position: 30
     accessToken:
       type: string
@@ -59,124 +59,124 @@
         label: 'Access Token'
         reloadIfChanged: true
         inspector:
-          group: vimeo-account
+          group: 'vimeo-account'
           position: 40
     vimeoType:
       type: string
-      defaultValue: albums
+      defaultValue: 'albums'
       ui:
-        label: Type
+        label: 'Type'
         reloadIfChanged: true
         inspector:
-          group: vimeo-type
+          group: 'vimeo-type'
           position: 10
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               albums:
-                label: Albums
+                label: 'Albums'
               channels:
-                label: Channels
+                label: 'Channels'
               groups:
-                label: Groups
+                label: 'Groups'
               videos:
-                label: Videos
+                label: 'Videos'
     sortTypeBy:
       type: string
-      defaultValue: alphabetical
+      defaultValue: 'alphabetical'
       ui:
         label: 'Sort type by'
         reloadIfChanged: true
         inspector:
-          group: vimeo-type
+          group: 'vimeo-type'
           position: 20
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               alphabetical:
-                label: Alphabetical
+                label: 'Alphabetical'
               date:
-                label: Date
+                label: 'Date'
               duration:
-                label: Duration
+                label: 'Duration'
     sortTypeDirection:
       type: string
-      defaultValue: asc
+      defaultValue: 'asc'
       ui:
         label: 'Direction for type'
         reloadIfChanged: true
         inspector:
-          group: vimeo-type
+          group: 'vimeo-type'
           position: 30
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               asc:
-                label: Ascending
+                label: 'Ascending'
               desc:
-                label: Descending
+                label: 'Descending'
     privacyOfType:
       type: string
-      defaultValue: anybody
+      defaultValue: 'anybody'
       ui:
         label: 'Show only elements with privacy'
         reloadIfChanged: true
         inspector:
-          group: vimeo-type
+          group: 'vimeo-type'
           position: 40
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               all:
-                label: All
+                label: 'All'
               anybody:
-                label: Anybody
+                label: 'Anybody'
               password:
-                label: Password
+                label: 'Password'
     sortVideosBy:
       type: string
-      defaultValue: date
+      defaultValue: 'date'
       ui:
         label: 'Sort videos'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video
+          group: 'vimeo-video'
           position: 10
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               manual:
-                label: Manual
+                label: 'Manual'
               date:
-                label: Date
+                label: 'Date'
               alphabetical:
-                label: Alphabetical
+                label: 'Alphabetical'
               plays:
-                label: Plays
+                label: 'Plays'
               likes:
-                label: Likes
+                label: 'Likes'
               comments:
-                label: Comments
+                label: 'Comments'
               duration:
-                label: Duration
+                label: 'Duration'
               modified_time:
                 label: 'Modified time'
     sortVideosDirection:
       type: string
-      defaultValue: asc
+      defaultValue: 'asc'
       ui:
         label: 'Direction for sorting videos'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video
+          group: 'vimeo-video'
           position: 20
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               asc:
-                label: Ascending
+                label: 'Ascending'
               desc:
-                label: Descending
+                label: 'Descending'
     thumbnailSize:
       type: integer
       defaultValue: 2
@@ -184,41 +184,41 @@
         label: 'Thumbnail Size'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video
+          group: 'vimeo-video'
           position: 30
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               -
-                label: 100x75px
+                label: '100x75px'
               -
-                label: 200x150px
+                label: '200x150px'
               -
-                label: 295x166px
+                label: '295x166px'
               -
-                label: 640x360px
+                label: '640x360px'
               -
-                label: 960x540px
+                label: '960x540px'
               -
-                label: 1280x719px
+                label: '1280x719px'
               -
-                label: 1900x1280px
+                label: '1900x1280px'
     useVisualHelperLibrary:
       type: string
-      defaultValue: isotope
+      defaultValue: 'isotope'
       ui:
         label: 'Use this view'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video
+          group: 'vimeo-video'
           position: 40
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               nothing:
-                label: Nothing
+                label: 'Nothing'
               isotope:
-                label: Isotope
+                label: 'Isotope'
     showFilter:
       type: boolean
       defaultValue: true
@@ -226,7 +226,7 @@
         label: 'Show filter for video'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video-filter
+          group: 'vimeo-video-filter'
           position: 10
     defaultStartFilter:
       type: string
@@ -234,13 +234,13 @@
         label: 'Active filter on page load'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video-filter
+          group: 'vimeo-video-filter'
           position: 20
-          editor: Content/Inspector/Editors/SelectBoxEditor
+          editor: 'Content/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             allowEmpty: true
             placeholder: 'No filter selected'
-            dataSourceIdentifier: kss-vimeo-filteroption
+            dataSourceIdentifier: 'kss-vimeo-filteroption'
     addAllFilter:
       type: boolean
       defaultValue: true
@@ -248,7 +248,7 @@
         label: 'Add ALL filter button'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video-filter
+          group: 'vimeo-video-filter'
           position: 30
     videosPerRowExtendedDesktop:
       type: integer
@@ -257,21 +257,21 @@
         label: 'Items per row: Extended Desktop'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video-grid
+          group: 'vimeo-video-grid'
           position: 60
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               2:
-                label: Six
+                label: 'Six'
               3:
-                label: Four
+                label: 'Four'
               4:
-                label: Three
+                label: 'Three'
               6:
-                label: Two
+                label: 'Two'
               12:
-                label: One
+                label: 'One'
     videosPerRowDesktop:
       type: integer
       defaultValue: 3
@@ -279,21 +279,21 @@
         label: 'Items per row: Desktop'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video-grid
+          group: 'vimeo-video-grid'
           position: 70
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               2:
-                label: Six
+                label: 'Six'
               3:
-                label: Four
+                label: 'Four'
               4:
-                label: Three
+                label: 'Three'
               6:
-                label: Two
+                label: 'Two'
               12:
-                label: One
+                label: 'One'
     videosPerRowTablet:
       type: integer
       defaultValue: 4
@@ -301,21 +301,21 @@
         label: 'Items per row: Tablet'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video-grid
+          group: 'vimeo-video-grid'
           position: 80
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               2:
-                label: Six
+                label: 'Six'
               3:
-                label: Four
+                label: 'Four'
               4:
-                label: Three
+                label: 'Three'
               6:
-                label: Two
+                label: 'Two'
               12:
-                label: One
+                label: 'One'
     videosPerRowMobile:
       type: integer
       defaultValue: 12
@@ -323,18 +323,18 @@
         label: 'Items per row: Mobile'
         reloadIfChanged: true
         inspector:
-          group: vimeo-video-grid
+          group: 'vimeo-video-grid'
           position: 90
-          editor: TYPO3.Neos/Inspector/Editors/SelectBoxEditor
+          editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
               2:
-                label: Six
+                label: 'Six'
               3:
-                label: Four
+                label: 'Four'
               4:
-                label: Three
+                label: 'Three'
               6:
-                label: Two
+                label: 'Two'
               12:
-                label: One
+                label: 'One'
