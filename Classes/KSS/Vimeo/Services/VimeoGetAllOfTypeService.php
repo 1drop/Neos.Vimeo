@@ -7,11 +7,11 @@ namespace KSS\Vimeo\Services;
 
 use TYPO3\Flow\Annotations as Flow;
 
-
 /**
  * Service to generate site packages
  */
-class VimeoGetAllOfTypeService {
+class VimeoGetAllOfTypeService
+{
 
     /**
      * @var \Vimeo\Vimeo
@@ -27,9 +27,10 @@ class VimeoGetAllOfTypeService {
      *
      * @return \Vimeo\Vimeo
      */
-    private function authenticate_vimeo( $clientId, $clientSecret, $accessToken ) {
+    private function authenticate_vimeo($clientId, $clientSecret, $accessToken)
+    {
         // Do an authentication call
-        $this->vimeo = new \Vimeo\Vimeo( $clientId, $clientSecret, $accessToken );
+        $this->vimeo = new \Vimeo\Vimeo($clientId, $clientSecret, $accessToken);
     }
 
     /**
@@ -48,16 +49,17 @@ class VimeoGetAllOfTypeService {
      *
      * @return mixed
      */
-    public function getAllOfType( $userID = 'me', $clientId, $clientSecret, $accessToken, $type = 'albums', $sortVideosBy = 'alphabetical', $sortVideoDirection = 'asc', $sortTypeBy = 'alphabetical', $sortTypeDirection = 'asc', $privacyOfType = 'anybody' ) {
-        $this->authenticate_vimeo( $clientId, $clientSecret, $accessToken );
+    public function getAllOfType($userID = 'me', $clientId, $clientSecret, $accessToken, $type = 'albums', $sortVideosBy = 'alphabetical', $sortVideoDirection = 'asc', $sortTypeBy = 'alphabetical', $sortTypeDirection = 'asc', $privacyOfType = 'anybody')
+    {
+        $this->authenticate_vimeo($clientId, $clientSecret, $accessToken);
 
         // Set url options and make request to vimeo
         $urlOptionsString = '/users/' . $userID . '/' . $type;
-        $result           = $this->vimeo->request( $urlOptionsString, array(
+        $result           = $this->vimeo->request($urlOptionsString, [
             'per_page'  => 50,
             'sort'      => $sortTypeBy,
             'direction' => $sortTypeDirection
-        ) );
+        ]);
 
         $nextPage        = true;
         $element         = [];
@@ -65,10 +67,10 @@ class VimeoGetAllOfTypeService {
         $i               = 0;
 
         // iterate through all pages
-        while ( $nextPage ) {
+        while ($nextPage) {
             // check for error message, if so append
             $element['status'] = $result['status'];
-            if ( $element['status'] != 200 ) {
+            if ($element['status'] != 200) {
                 $element['message'] = $result['body']['error'];
                 $nextPage           = false;
             } else {
@@ -76,9 +78,9 @@ class VimeoGetAllOfTypeService {
                 $element['type'] = $type;
 
                 // Loop through each data set of the result and build new simple array to return
-                foreach ( $result['body']['data'] as $resultObject ) {
+                foreach ($result['body']['data'] as $resultObject) {
                     // check for correct privacy level of type
-                    if ( $privacyOfType == 'all' || $privacyOfType == $resultObject['privacy']["view"] ) {
+                    if ($privacyOfType == 'all' || $privacyOfType == $resultObject['privacy']["view"]) {
                         $element['data'][ $i ]['name']     = $resultObject['name'];
                         $element['data'][ $i ]['uri']      = $resultObject['uri'];
                         $element['data'][ $i ]['link']     = $resultObject['link'];
@@ -86,8 +88,8 @@ class VimeoGetAllOfTypeService {
                         $element['data'][ $i ]['pictures'] = $resultObject['pictures'];
 
                         // No extra request necessary for type videos to fetch all videos from vimeo
-                        if ( $type != 'videos' ) {
-                            $videos                          = $this->getAllVideosOfElement( $resultObject['uri'], $sortVideosBy, $sortVideoDirection );
+                        if ($type != 'videos') {
+                            $videos                          = $this->getAllVideosOfElement($resultObject['uri'], $sortVideosBy, $sortVideoDirection);
                             $element['data'][ $i ]['videos'] = $videos['body']['data'];
                         }
 
@@ -95,8 +97,8 @@ class VimeoGetAllOfTypeService {
                     }
                 }
 
-                if ( $result['body']['paging'] && $result['body']['paging']['next'] ) {
-                    $result = $this->vimeo->request( $result['body']['paging']['next'] );
+                if ($result['body']['paging'] && $result['body']['paging']['next']) {
+                    $result = $this->vimeo->request($result['body']['paging']['next']);
                 } else {
                     $nextPage = false;
                 }
@@ -113,12 +115,11 @@ class VimeoGetAllOfTypeService {
      *
      * @return array result of request (found videos)
      */
-    public function getAllVideosOfElement( $link, $sortVideosBy, $sortVideoDirection ) {
-        return $this->vimeo->request( $link . '/videos', array(
+    public function getAllVideosOfElement($link, $sortVideosBy, $sortVideoDirection)
+    {
+        return $this->vimeo->request($link . '/videos', [
             'sort'      => $sortVideosBy,
             'direction' => $sortVideoDirection
-        ) );
+        ]);
     }
-
-
 }

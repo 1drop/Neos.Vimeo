@@ -46,6 +46,5 @@ page.body {
     javascripts {
         shufflejs = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/JavaScript/vendor.js"></script>'
         vimeoGrid = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/JavaScript/main.js" async defer></script>'
-        isotope.@position = 'after shufflejs'
     }
 }

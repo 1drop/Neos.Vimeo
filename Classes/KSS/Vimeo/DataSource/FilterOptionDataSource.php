@@ -5,73 +5,74 @@ use TYPO3\Neos\Service\DataSource\AbstractDataSource;
 use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 use TYPO3\Flow\Annotations as Flow;
 
-class FilterOptionDataSource extends AbstractDataSource {
+class FilterOptionDataSource extends AbstractDataSource
+{
 
-	/**
-	 * @Flow\Inject
-	 * @var \KSS\Vimeo\Services\VimeoGetAllOfTypeService
-	 */
-	protected $vimeoGetAllOfTypeService;
+    /**
+     * @Flow\Inject
+     * @var \KSS\Vimeo\Services\VimeoGetAllOfTypeService
+     */
+    protected $vimeoGetAllOfTypeService;
 
-	/**
-	 * @var \KSS\Vimeo\Utility\Umlaute
-	 * @Flow\Inject
-	 */
-	protected $umlaute;
+    /**
+     * @var \KSS\Vimeo\Utility\Umlaute
+     * @Flow\Inject
+     */
+    protected $umlaute;
 
-	/**
-	 * @var string
-	 */
-	static protected $identifier = 'kss-vimeo-filteroption';
+    /**
+     * @var string
+     */
+    protected static $identifier = 'kss-vimeo-filteroption';
 
-	/**
-	 * Get data
-	 *
-	 * @param NodeInterface $node The node that is currently edited (optional)
-	 * @param array $arguments Additional arguments (key / value)
-	 * @return array JSON serializable data
-	 */
-	public function getData(NodeInterface $node = NULL, array $arguments) {
+    /**
+     * Get data
+     *
+     * @param NodeInterface $node The node that is currently edited (optional)
+     * @param array $arguments Additional arguments (key / value)
+     * @return array JSON serializable data
+     */
+    public function getData(NodeInterface $node = null, array $arguments)
+    {
 
-		// necessary for user auth
-		$userId = $node->getProperty('userId');
-		if($userId == '') $userId = 'me';
-		$client_id = $node->getProperty('clientId');
-		$client_secret = $node->getProperty('clientSecret');
-		$access_token = $node->getProperty('accessToken');
+        // necessary for user auth
+        $userId = $node->getProperty('userId');
+        if ($userId == '') {
+            $userId = 'me';
+        }
+        $client_id = $node->getProperty('clientId');
+        $client_secret = $node->getProperty('clientSecret');
+        $access_token = $node->getProperty('accessToken');
 
-		// necessary to fetch data
-		$vimeoType = $node->getProperty('vimeoType');
-		$sortVideosBy = $node->getProperty('sortVideosBy');
-		$sortVideosDirection = $node->getProperty('sortVideosDirection');
-		$sortTypeBy = $node->getProperty('sortTypeBy');
-		$sortTypeDirection = $node->getProperty('sortTypeDirection');
-		$privacyOfType = $node->getProperty('privacyOfType');
+        // necessary to fetch data
+        $vimeoType = $node->getProperty('vimeoType');
+        $sortVideosBy = $node->getProperty('sortVideosBy');
+        $sortVideosDirection = $node->getProperty('sortVideosDirection');
+        $sortTypeBy = $node->getProperty('sortTypeBy');
+        $sortTypeDirection = $node->getProperty('sortTypeDirection');
+        $privacyOfType = $node->getProperty('privacyOfType');
 
-		$allElementsOfUser = $this->vimeoGetAllOfTypeService->getAllOfType($userId,$client_id, $client_secret, $access_token, $vimeoType, $sortVideosBy, $sortVideosDirection, $sortTypeBy, $sortTypeDirection, $privacyOfType);
+        $allElementsOfUser = $this->vimeoGetAllOfTypeService->getAllOfType($userId, $client_id, $client_secret, $access_token, $vimeoType, $sortVideosBy, $sortVideosDirection, $sortTypeBy, $sortTypeDirection, $privacyOfType);
 
-		$result = [];
+        $result = [];
 
-		// check if at least one element exist, if so create the array for the answer
-		if(count($allElementsOfUser['data']) > 0){
-			// create array for dynamic options
-			foreach($allElementsOfUser['data'] as $filter){
-				$key = $this->umlaute->convertAccentAndBlankspace($filter['name']);
-				$result[$key] = [
-					"label" => $filter['name'],
-					#"group" => "filter",
-					#"icon" => "icon-angle-right"
-				];
-			}
-		}else{
-			$result['empty'] = [
-				"label" => "no data available"
-			];
-		}
+        // check if at least one element exist, if so create the array for the answer
+        if (count($allElementsOfUser['data']) > 0) {
+            // create array for dynamic options
+            foreach ($allElementsOfUser['data'] as $filter) {
+                $key = $this->umlaute->convertAccentAndBlankspace($filter['name']);
+                $result[$key] = [
+                    "label" => $filter['name']
+                ];
+            }
+        } else {
+            $result['empty'] = [
+                "label" => "no data available"
+            ];
+        }
 
-		ksort($result);
+        ksort($result);
 
-		return $result;
-	}
-
+        return $result;
+    }
 }

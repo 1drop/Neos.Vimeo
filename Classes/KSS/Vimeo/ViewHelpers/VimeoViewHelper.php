@@ -11,7 +11,8 @@ use TYPO3\Flow\Annotations as Flow;
  *
  * <kss:vimeo elementIds="{elementIds}" type="albums" sortBy="manual" />
  */
-class VimeoViewHelper extends AbstractViewHelper {
+class VimeoViewHelper extends AbstractViewHelper
+{
 
 
     /**
@@ -50,39 +51,37 @@ class VimeoViewHelper extends AbstractViewHelper {
      *
      * @return string
      */
-    public function render( array $elements, $thumbnailSize = 2, $showFilter = true, $videosPerRowExtendedDesktop = 'seven', $videosPerRowDesktop = 'five', $videosPerRowTablet = 'three', $videosPerRowMobile = 'one', $defaultStartFilter = '*', $addAllFilter = true ) {
-
-
+    public function render(array $elements, $thumbnailSize = 2, $showFilter = true, $videosPerRowExtendedDesktop = 'seven', $videosPerRowDesktop = 'five', $videosPerRowTablet = 'three', $videosPerRowMobile = 'one', $defaultStartFilter = '*', $addAllFilter = true)
+    {
         $this->vimeoThumbnailSize = $thumbnailSize;
         $output                   = '';
 
-        if ( $showFilter ) {
-            $output .= $this->addFilter( $elements['data'], $defaultStartFilter, $addAllFilter );
+        if ($showFilter) {
+            $output .= $this->addFilter($elements['data'], $defaultStartFilter, $addAllFilter);
         }
 
         $output .= '<div class="vimeo-container row" id="vimeo-grid">';
 
-        if ( $elements['type'] == 'videos' ) {
-
+        if ($elements['type'] == 'videos') {
         } else {
 
 
             // Check if any videos are available
-            if ( count( $elements['data'] ) == 0 ) {
+            if (count($elements['data']) == 0) {
                 $output = '<div class"bg-info">';
                 $output .= '<h3 style="font-weight: bold">No ' . $elements['type'] . ' available!</h3>';
                 $output .= '</div></div>';
 
                 return $output;
             } else {
-                $sizes = ( count( $elements['data'][0]['videos'][0]['pictures']['sizes'] ) - 1 );
+                $sizes = (count($elements['data'][0]['videos'][0]['pictures']['sizes']) - 1);
             }
 
             // check if valid thumbnailsize is selected
-            if ( $this->vimeoThumbnailSize > $sizes || $this->vimeoThumbnailSize < 0 ) {
+            if ($this->vimeoThumbnailSize > $sizes || $this->vimeoThumbnailSize < 0) {
                 $output = '<div class"bg-warning">';
                 $output .= '<h3 style="font-weight: bold">Invalid thumbnail size! Only vimeo plus/pro accounts have full HD!</h3>';
-                $biggestThumbnailSize = array_pop( $elements[0]['pictures']['sizes'] );
+                $biggestThumbnailSize = array_pop($elements[0]['pictures']['sizes']);
                 $output .= '<p>Your maximal available thumbnail size is: ' . $biggestThumbnailSize['width'] . 'x' . $biggestThumbnailSize['height'] . 'px</p>';
                 $output .= '</div>';
             }
@@ -94,9 +93,9 @@ class VimeoViewHelper extends AbstractViewHelper {
 
             // Build for each returned json object the html
             $distinctVideos = [];
-            foreach ( $elements['data'] as $element ) {
-                foreach ( $element['videos'] as $video ) {
-                    if ( array_key_exists( $video['link'], $distinctVideos ) ) {
+            foreach ($elements['data'] as $element) {
+                foreach ($element['videos'] as $video) {
+                    if (array_key_exists($video['link'], $distinctVideos)) {
                         $distinctVideos[ $video['link'] ]['albums'][] = $element['name'];
                     } else {
                         $video['albums']                  = [ $element['name'] ];
@@ -105,12 +104,11 @@ class VimeoViewHelper extends AbstractViewHelper {
                 }
             }
 
-            foreach ( $distinctVideos as $video ) {
-                $output .= $this->createJsonObject( $video ) . ',';
+            foreach ($distinctVideos as $video) {
+                $output .= $this->createJsonObject($video) . ',';
             }
 
             $output .= ']}</script>';
-
         }
 
         $output .= '</div>';
@@ -126,7 +124,8 @@ class VimeoViewHelper extends AbstractViewHelper {
      *
      * @return string return all videos as html elements
      */
-    public function createJsonObject( $data ) {
+    public function createJsonObject($data)
+    {
         $object = [
             'albums'      => [],
             'releaseTime' => $data['release_time'],
@@ -138,14 +137,14 @@ class VimeoViewHelper extends AbstractViewHelper {
                 'height' => $data['pictures']['sizes'][ $this->vimeoThumbnailSize ]['height']
             ]
         ];
-        foreach ( $data['albums'] as $album ) {
+        foreach ($data['albums'] as $album) {
             $object['albums'][] = [
-                'ID'    => $this->umlaute->convertAccentAndBlankspace( $album ),
+                'ID'    => $this->umlaute->convertAccentAndBlankspace($album),
                 'title' => $album
             ];
         }
 
-        return json_encode( $object );
+        return json_encode($object);
     }
 
     /**
@@ -157,21 +156,22 @@ class VimeoViewHelper extends AbstractViewHelper {
      *
      * @return string
      */
-    public function addFilter( $elementNames, $defaultStartFilter, $addAllFilter ) {
+    public function addFilter($elementNames, $defaultStartFilter, $addAllFilter)
+    {
         // All filter is not allowed to have . infront of *
-        if ( $defaultStartFilter == '' || $defaultStartFilter == '*' ) {
+        if ($defaultStartFilter == '' || $defaultStartFilter == '*') {
             $html = '<div id="vimeo-filters" class="button-group" data-default-start-filter="*">';
         } else {
             $html = '<div id="vimeo-filters" class="button-group" data-default-start-filter="' . '.' . $defaultStartFilter . '">';
         }
         // check if "all" filter should be displayed
-        if ( $addAllFilter === true ) {
+        if ($addAllFilter === true) {
             $html .= '<button data-filter="*">All</button>';
         }
 
-        if ( count( $elementNames ) > 0 ) {
-            foreach ( $elementNames as $filter ) {
-                $html .= '<button data-value="' . $this->umlaute->convertAccentAndBlankspace( $filter['name'] ) . '">' . $filter['name'] . '</button>';
+        if (count($elementNames) > 0) {
+            foreach ($elementNames as $filter) {
+                $html .= '<button data-value="' . $this->umlaute->convertAccentAndBlankspace($filter['name']) . '">' . $filter['name'] . '</button>';
             }
         }
 
@@ -179,5 +179,4 @@ class VimeoViewHelper extends AbstractViewHelper {
 
         return $html;
     }
-
 }
