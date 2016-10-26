@@ -56,7 +56,7 @@ class VimeoViewHelper extends AbstractViewHelper
         $this->vimeoThumbnailSize = $thumbnailSize;
         $output                   = '';
 
-        if ($showFilter) {
+        if ($showFilter && $elements['type'] != 'albumSingle') {
             $output .= $this->addFilter($elements['data'], $defaultStartFilter, $addAllFilter);
         }
 
@@ -74,7 +74,11 @@ class VimeoViewHelper extends AbstractViewHelper
 
                 return $output;
             } else {
-                $sizes = (count($elements['data'][0]['videos'][0]['pictures']['sizes']) - 1);
+                if ($elements['type'] == 'albumSingle') {
+                    $sizes = count($elements['data']);
+                } else {
+                    $sizes = count($elements['data'][0]['videos'][0]['pictures']['sizes']) - 1;
+                }
             }
 
             // check if valid thumbnailsize is selected
@@ -93,13 +97,21 @@ class VimeoViewHelper extends AbstractViewHelper
 
             // Build for each returned json object the html
             $distinctVideos = [];
-            foreach ($elements['data'] as $element) {
-                foreach ($element['videos'] as $video) {
-                    if (array_key_exists($video['link'], $distinctVideos)) {
-                        $distinctVideos[ $video['link'] ]['albums'][] = $element['name'];
-                    } else {
-                        $video['albums']                  = [ $element['name'] ];
-                        $distinctVideos[ $video['link'] ] = $video;
+
+            if ($elements['type'] == 'albumSingle') {
+                foreach ($elements['data'] as $video) {
+                    $video['albums']                  = ['albumSingle'];
+                    $distinctVideos[ $video['link'] ] = $video;
+                }
+            } else {
+                foreach ($elements['data'] as $element) {
+                    foreach ($element['videos'] as $video) {
+                        if (array_key_exists($video['link'], $distinctVideos)) {
+                            $distinctVideos[ $video['link'] ]['albums'][] = $element['name'];
+                        } else {
+                            $video['albums']                  = [ $element['name'] ];
+                            $distinctVideos[ $video['link'] ] = $video;
+                        }
                     }
                 }
             }
@@ -112,7 +124,6 @@ class VimeoViewHelper extends AbstractViewHelper
         }
 
         $output .= '</div>';
-        $output .= '<div class="loadmore-wrapper text-xs-center"><button class="btn-round" id="loadmore">Load more</button></div>';
 
         return $output;
     }

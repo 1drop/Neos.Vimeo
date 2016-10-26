@@ -49,12 +49,17 @@ class VimeoGetAllOfTypeService
      *
      * @return mixed
      */
-    public function getAllOfType($userID = 'me', $clientId, $clientSecret, $accessToken, $type = 'albums', $sortVideosBy = 'alphabetical', $sortVideoDirection = 'asc', $sortTypeBy = 'alphabetical', $sortTypeDirection = 'asc', $privacyOfType = 'anybody')
+    public function getAllOfType($userID = 'me', $clientId, $clientSecret, $accessToken, $type = 'albums', $albumSingleId, $sortVideosBy = 'alphabetical', $sortVideoDirection = 'asc', $sortTypeBy = 'alphabetical', $sortTypeDirection = 'asc', $privacyOfType = 'anybody')
     {
         $this->authenticate_vimeo($clientId, $clientSecret, $accessToken);
 
         // Set url options and make request to vimeo
-        $urlOptionsString = '/users/' . $userID . '/' . $type;
+        if ($type == 'albumSingle') {
+            $urlOptionsString = '/users/' . $userID . '/albums/' . $albumSingleId . '/videos';
+        } else {
+            $urlOptionsString = '/users/' . $userID . '/' . $type;
+        }
+
         $result           = $this->vimeo->request($urlOptionsString, [
             'per_page'  => 50,
             'sort'      => $sortTypeBy,
@@ -87,8 +92,12 @@ class VimeoGetAllOfTypeService
                         $element['data'][ $i ]['privacy']  = $resultObject['privacy'];
                         $element['data'][ $i ]['pictures'] = $resultObject['pictures'];
 
+                        if ($type == 'albumSingle') {
+                            $element['data'][ $i ]['release_time'] = $resultObject['release_time'];
+                        }
+
                         // No extra request necessary for type videos to fetch all videos from vimeo
-                        if ($type != 'videos') {
+                        if ($type != 'videos' && $type != 'albumSingle') {
                             $videos                          = $this->getAllVideosOfElement($resultObject['uri'], $sortVideosBy, $sortVideoDirection);
                             $element['data'][ $i ]['videos'] = $videos['body']['data'];
                         }

@@ -46,13 +46,14 @@ class FilterOptionDataSource extends AbstractDataSource
 
         // necessary to fetch data
         $vimeoType = $node->getProperty('vimeoType');
+        $albumSingleId = $node->getProperty('albumSingleId');
         $sortVideosBy = $node->getProperty('sortVideosBy');
         $sortVideosDirection = $node->getProperty('sortVideosDirection');
         $sortTypeBy = $node->getProperty('sortTypeBy');
         $sortTypeDirection = $node->getProperty('sortTypeDirection');
         $privacyOfType = $node->getProperty('privacyOfType');
 
-        $allElementsOfUser = $this->vimeoGetAllOfTypeService->getAllOfType($userId, $client_id, $client_secret, $access_token, $vimeoType, $sortVideosBy, $sortVideosDirection, $sortTypeBy, $sortTypeDirection, $privacyOfType);
+        $allElementsOfUser = $this->vimeoGetAllOfTypeService->getAllOfType($userId, $client_id, $client_secret, $access_token, $vimeoType, $albumSingleId, $sortVideosBy, $sortVideosDirection, $sortTypeBy, $sortTypeDirection, $privacyOfType);
 
         $result = [];
 
