@@ -13,11 +13,13 @@ prototype(KSS.Vimeo:Plugin) < prototype(TYPO3.Neos:Plugin) {
         maximumLifetime = '7200'
         entryIdentifier {
             editPreviewMode = ${node.context.currentRenderingMode.name}
+            loadMoreButtonText = ${q(node).property('loadMoreButtonText')}
             userId = ${q(node).property('userId')}
             clientId = ${q(node).property('clientId')}
             clientSecret = ${q(node).property('clientSecret')}
             accessToken = ${q(node).property('accessToken')}
             vimeoType = ${q(node).property('vimeoType')}
+            albumSingleId = ${q(node).property('albumSingleId')}
             sortTypeBy = ${q(node).property('sortTypeBy')}
             sortTypeDirection = ${q(node).property('sortTypeDirection')}
             privacyOfType = ${q(node).property('privacyOfType')}

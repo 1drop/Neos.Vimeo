@@ -29,6 +29,11 @@
           label: 'Vimeo account'
           tab: 'credentials'
   properties:
+    loadMoreButtonText:
+      type: 'string'
+      defaultValue: 'Load more'
+      ui:
+        inlineEditable: true
     userId:
       type: string
       ui:
@@ -73,6 +78,8 @@
           editor: 'TYPO3.Neos/Inspector/Editors/SelectBoxEditor'
           editorOptions:
             values:
+              albumSingle:
+                label: 'Single Album'
               albums:
                 label: 'Albums'
               channels:
@@ -133,6 +140,14 @@
                 label: 'Anybody'
               password:
                 label: 'Password'
+    albumSingleId:
+      type: string
+      ui:
+        label: 'Album ID for single Album mode'
+        reloadIfChanged: true
+        inspector:
+         group: 'vimeo-video'
+         position: 5
     sortVideosBy:
       type: string
       defaultValue: 'date'

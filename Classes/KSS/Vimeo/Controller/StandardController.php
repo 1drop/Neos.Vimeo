@@ -34,6 +34,7 @@ class StandardController extends \TYPO3\Flow\Mvc\Controller\ActionController
 
         // necessary to fetch data
         $vimeoType = $this->request->getInternalArgument('__vimeoType');
+        $albumSingleId = $this->request->getInternalArgument('__albumSingleId');
         $sortVideosBy = $this->request->getInternalArgument('__sortVideosBy');
         $sortVideosDirection = $this->request->getInternalArgument('__sortVideosDirection');
         $sortTypeBy = $this->request->getInternalArgument('__sortTypeBy');
@@ -50,12 +51,15 @@ class StandardController extends \TYPO3\Flow\Mvc\Controller\ActionController
         $videosPerRowDesktop = $this->request->getInternalArgument('__videosPerRowDesktop');
         $videosPerRowTablet = $this->request->getInternalArgument('__videosPerRowTablet');
         $videosPerRowMobile = $this->request->getInternalArgument('__videosPerRowMobile');
+        $loadMoreButtonText = $this->request->getInternalArgument('__loadMoreButtonText');
         $node = $this->request->getInternalArgument('__node');
 
-        $allElementsOfUser = $this->vimeoGetAllOfTypeService->getAllOfType($userId, $client_id, $client_secret, $access_token, $vimeoType, $sortVideosBy, $sortVideosDirection, $sortTypeBy, $sortTypeDirection, $privacyOfType);
+        $allElementsOfUser = $this->vimeoGetAllOfTypeService->getAllOfType($userId, $client_id, $client_secret, $access_token, $vimeoType, $albumSingleId, $sortVideosBy, $sortVideosDirection, $sortTypeBy, $sortTypeDirection, $privacyOfType);
 
         $this->view->assignMultiple([
             'node' => $node,
+            'loadMoreButtonText' => $loadMoreButtonText,
+            'albumSingleId' => $albumSingleId,
             'allElementsOfUser' => $allElementsOfUser,
             'thumbnailSize' => $thumbnailSize,
             'showFilter' => $showFilter,
