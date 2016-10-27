@@ -260,18 +260,22 @@ function addVideoItems(count) {
     return itemsToAdd;
 }
 
-// sort items by date
-window.window.onedropVimeoGridData.items = sortVideoItemsByDate(window.window.onedropVimeoGridData.items);
+// only start if we have items
+if (window.window.onedropVimeoGridData && window.window.onedropVimeoGridData.items.length > 0) {
 
-// add 9 items to dom
-addVideoItems(9);
+    // sort items by date
+    window.window.onedropVimeoGridData.items = sortVideoItemsByDate(window.window.onedropVimeoGridData.items);
 
-// initialize shufflejs
-window.onedropVimeoGrid = new OnedropVimeoGrid(shuffleItemsContainer);
+    // add 9 items to dom
+    addVideoItems(9);
 
-// load more items on click
-shuffleLoadMoreButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    var newElements = addVideoItems(9);
-    window.onedropVimeoGrid.shuffle.add(newElements);
-});
+    // initialize shufflejs
+    window.onedropVimeoGrid = new OnedropVimeoGrid(shuffleItemsContainer);
+
+    // load more items on click
+    shuffleLoadMoreButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        var newElements = addVideoItems(9);
+        window.onedropVimeoGrid.shuffle.add(newElements);
+    });
+}
