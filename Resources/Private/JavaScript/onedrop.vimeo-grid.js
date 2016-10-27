@@ -23,7 +23,8 @@ var OnedropVimeoGrid = function (element) {
 
     this.shuffle = new Shuffle(element, {
         easing: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)', // easeOutQuart
-        itemSelector: '.item'
+        itemSelector: '.item',
+        spacer: document.getElementById('vimeo-grid-spacer')
     });
 
     this.shuffle.sort({
