@@ -23,7 +23,8 @@ var OnedropVimeoGrid = function (element) {
 
     this.shuffle = new Shuffle(element, {
         easing: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)', // easeOutQuart
-        itemSelector: '.item'
+        itemSelector: '.item',
+        spacer: document.getElementById('vimeo-grid-spacer')
     });
 
     this.shuffle.sort({
@@ -158,7 +159,7 @@ function openVideoInLightbox(url) {
 
     popup.setAttribute("id", "vimeo-video-popup");
     overlay.setAttribute("id", "vimeo-video-popup__overlay");
-    videoContainer.setAttribute("class", "embed-responsive embed-responsive-16by9");
+    videoContainer.setAttribute("id", "vimeo-video-popup__embed-container");
     videoFrame.setAttribute("src", url);
     videoFrame.setAttribute("frameborder", 0);
     videoFrame.setAttribute("webkitallowfullscreen", '');
@@ -259,18 +260,22 @@ function addVideoItems(count) {
     return itemsToAdd;
 }
 
-// sort items by date
-window.window.onedropVimeoGridData.items = sortVideoItemsByDate(window.window.onedropVimeoGridData.items);
+// only start if we have items
+if (window.window.onedropVimeoGridData && window.window.onedropVimeoGridData.items.length > 0) {
 
-// add 9 items to dom
-addVideoItems(9);
+    // sort items by date
+    window.window.onedropVimeoGridData.items = sortVideoItemsByDate(window.window.onedropVimeoGridData.items);
 
-// initialize shufflejs
-window.onedropVimeoGrid = new OnedropVimeoGrid(shuffleItemsContainer);
+    // add 9 items to dom
+    addVideoItems(9);
 
-// load more items on click
-shuffleLoadMoreButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    var newElements = addVideoItems(9);
-    window.onedropVimeoGrid.shuffle.add(newElements);
-});
+    // initialize shufflejs
+    window.onedropVimeoGrid = new OnedropVimeoGrid(shuffleItemsContainer);
+
+    // load more items on click
+    shuffleLoadMoreButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        var newElements = addVideoItems(9);
+        window.onedropVimeoGrid.shuffle.add(newElements);
+    });
+}

@@ -91,6 +91,7 @@ class VimeoViewHelper extends AbstractViewHelper
             }
 
 
+            $output .= '<div id="vimeo-grid-spacer" class="item col-xs-' . $videosPerRowMobile . ' col-sm-' . $videosPerRowTablet . ' col-md-' . $videosPerRowDesktop . ' col-lg-' . $videosPerRowExtendedDesktop . '"></div>';
             $output .= '<script>window.onedropVimeoGridData = {';
             $output .= 'itemClasses: "item col-xs-' . $videosPerRowMobile . ' col-sm-' . $videosPerRowTablet . ' col-md-' . $videosPerRowDesktop . ' col-lg-' . $videosPerRowExtendedDesktop . '",';
             $output .= 'items: [';
