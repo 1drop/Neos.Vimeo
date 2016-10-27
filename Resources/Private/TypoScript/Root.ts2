@@ -41,12 +41,15 @@ prototype(KSS.Vimeo:Plugin) < prototype(TYPO3.Neos:Plugin) {
 page.head {
     stylesheets {
         vimeoGrid = '<link href="/_Resources/Static/Packages/KSS.Vimeo/Styles/main.css" rel="stylesheet">'
+        vimeoGrid.@if.condition = ${q(documentNode).children('[instanceof TYPO3.Neos:ContentCollection]').find('[instanceof KSS.Vimeo:Plugin]').count() > 0}
     }
 }
 
 page.body {
     javascripts {
         shufflejs = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/JavaScript/vendor.js"></script>'
+        shufflejs.@if.condition = ${q(documentNode).children('[instanceof TYPO3.Neos:ContentCollection]').find('[instanceof KSS.Vimeo:Plugin]').count() > 0}
         vimeoGrid = '<script type="text/javascript" src="/_Resources/Static/Packages/KSS.Vimeo/JavaScript/main.js" async defer></script>'
+        vimeoGrid.@if.condition = ${q(documentNode).children('[instanceof TYPO3.Neos:ContentCollection]').find('[instanceof KSS.Vimeo:Plugin]').count() > 0}
     }
 }
