@@ -6,3 +6,6 @@ $color-white: #fff;
 $transition-default-duration: .33s;
 $transition-default-timing-function: ease-in-out;
 $transition-default: $transition-default-duration $transition-default-timing-function;
+
+// SETTINGS
+$popup-padding-amount: 5;  // percentage of viewport width/height

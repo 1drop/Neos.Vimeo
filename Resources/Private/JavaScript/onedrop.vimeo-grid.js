@@ -159,7 +159,7 @@ function openVideoInLightbox(url) {
 
     popup.setAttribute("id", "vimeo-video-popup");
     overlay.setAttribute("id", "vimeo-video-popup__overlay");
-    videoContainer.setAttribute("class", "embed-responsive embed-responsive-16by9");
+    videoContainer.setAttribute("id", "vimeo-video-popup__embed-container");
     videoFrame.setAttribute("src", url);
     videoFrame.setAttribute("frameborder", 0);
     videoFrame.setAttribute("webkitallowfullscreen", '');
