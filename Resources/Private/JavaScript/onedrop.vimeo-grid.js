@@ -14,10 +14,6 @@ function toArray(thing) {
     return Array.prototype.slice.call(thing);
 }
 
-function sortByDate(element) {
-    return element.getAttribute('data-release');
-}
-
 var OnedropVimeoGrid = function (element) {
     this.albums = toArray(document.querySelectorAll('#vimeo-filters button'));
 
@@ -25,11 +21,6 @@ var OnedropVimeoGrid = function (element) {
         easing: 'cubic-bezier(0.165, 0.840, 0.440, 1.000)', // easeOutQuart
         itemSelector: '.item',
         spacer: document.getElementById('vimeo-grid-spacer')
-    });
-
-    this.shuffle.sort({
-        reverse: true,
-        by: sortByDate
     });
 
     this.filters = {
@@ -120,7 +111,7 @@ OnedropVimeoGrid.prototype.itemPassesFilters = function (element) {
     var filteredAlbums = this.filters.albums;
     var itemAlbums = JSON.parse(element.getAttribute('data-album'));
 
-    if (filteredAlbums[0] != null && filteredAlbums.length > 0) {
+    if (filteredAlbums[0] != null && filteredAlbums.length > 0 && itemAlbums) {
         var hasFilteredAlbum = false;
         for (var i = 0; i < itemAlbums.length; i++) {
             if (arrayIncludes(filteredAlbums, itemAlbums[i].ID)) {
